@@ -2,13 +2,10 @@ workflows:
   capacitor-android:
     name: Build Android APK for Capacitor
     environment:
-      vars:
-        PACKAGE_NAME: "com.solidarityfordrc.app"
-      node: 18
+      node: 20.11.1 # ✅ Version compatible avec Capacitor 5
     scripts:
       - npm ci
-      - npm run build || echo "No build script"
-      - npx cap sync
+      - npx cap sync android
       - cd android
       - ./gradlew assembleDebug
     artifacts:
