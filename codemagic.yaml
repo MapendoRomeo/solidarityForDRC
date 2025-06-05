@@ -4,7 +4,6 @@ workflows:
     environment:
       node: 20.10.0
       java: 17
-      android: true
     scripts:
       - name: Installer les dépendances
         script: |
