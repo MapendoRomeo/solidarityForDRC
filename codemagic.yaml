@@ -1,17 +1,18 @@
 workflows:
   android-build:
-    name: Android Build
+    name: Build Android APK
     environment:
-      sdk: 34
-      node: 20
+      node: 20.10.0
+      java: 17
+      android: true
     scripts:
-      - name: Install dependencies
-        script: npm install
-      - name: Build web assets
-        script: npm run build || echo "skip if not using build"
-      - name: Sync Capacitor
-        script: npx cap sync
-      - name: Build Android app
+      - name: Installer les dépendances
+        script: |
+          npm install
+      - name: Copier les fichiers web
+        script: |
+          npx cap sync
+      - name: Construire l'APK
         script: |
           cd android
           ./gradlew assembleDebug
