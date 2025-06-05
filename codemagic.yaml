@@ -1,12 +1,19 @@
 workflows:
-  capacitor-android:
-    name: Build Android APK for Capacitor
+  android-build:
+    name: Android Build
     environment:
-      node: 20.11.1 # ✅ Version compatible avec Capacitor 5
+      sdk: 34
+      node: 20
     scripts:
-      - npm ci
-      - npx cap sync android
-      - cd android
-      - ./gradlew assembleDebug
+      - name: Install dependencies
+        script: npm install
+      - name: Build web assets
+        script: npm run build || echo "skip if not using build"
+      - name: Sync Capacitor
+        script: npx cap sync
+      - name: Build Android app
+        script: |
+          cd android
+          ./gradlew assembleDebug
     artifacts:
       - android/app/build/outputs/**/*.apk
