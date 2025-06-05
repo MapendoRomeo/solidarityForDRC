@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">solidarityForDRC</string>
+    <string name="title_activity_main">solidarityForDRC</string>
+    <string name="package_name">com.solidarityfordrc.app</string>
+    <string name="custom_url_scheme">com.solidarityfordrc.app</string>
+</resources>

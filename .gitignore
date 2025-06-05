@@ -1,0 +1,18 @@
+# Node modules
+node_modules/
+npm-debug.log*
+
+# Capacitor Android build
+android/.gradle/
+android/app/build/
+android/build/
+android/local.properties
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Git
+.env
