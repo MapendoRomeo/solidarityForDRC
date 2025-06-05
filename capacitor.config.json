@@ -1,5 +1,6 @@
 {
   "appId": "com.solidarityfordrc.app",
   "appName": "solidarityForDRC",
-  "webDir": "www"
+  "webDir": "www",
+  "bundledWebRuntime": false
 }
