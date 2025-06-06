@@ -1,16 +1,17 @@
 workflows:
-  build-android:
+  build-android-capacitor:
     name: Build Android APK (Capacitor)
     max_build_duration: 20
     environment:
       vars:
-        JAVA_HOME: /usr/libexec/java_home -v 17
-      android:
-        java_version: 17
+        ANDROID_SDK_ROOT: /usr/local/share/android-sdk
+      node: 20.10.0
     scripts:
-      - echo "Using Java version:"
+      - echo "Installation ou configuration de Java 17"
+      - sudo apt-get update
+      - sudo apt-get install openjdk-17-jdk -y
+      - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
       - java -version
-      - ./gradlew clean
-      - ./gradlew assembleDebug
+      - ./gradlew clean assembleDebug
     artifacts:
       - android/app/build/outputs/apk/debug/app-debug.apk
