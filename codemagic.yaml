@@ -5,7 +5,7 @@ workflows:
     environment:
       vars:
         JAVA_VERSION: 17
-      node: 18.18.0
+      node: 20.10.0
     scripts:
       - name: Install dependencies
         script: |
