@@ -3,11 +3,7 @@ workflows:
     name: Build Android APK (Capacitor)
     max_build_duration: 20
     environment:
-      vars:
-        java_version: 17.0.0
-        android_sdk: 30.0.3
-        android_ndk: 21.4.7075529
-        node_version: 20.10.0
+      java: 17
       node: 20.10.0
     scripts:
       - name: Install dependencies
@@ -18,23 +14,10 @@ workflows:
         script: |
           npx cap sync android
 
-      - name: Install OpenJDK 21
-        script: |
-          brew install openjdk@21
-          echo "export JAVA_HOME=$(/usr/libexec/java_home -v 21)" >> $BASH_ENV
-          echo "export PATH=$JAVA_HOME/bin:$PATH" >> $BASH_ENV
-
-      - name: Verify Java version
-        script: |
-          source $BASH_ENV
-          java -version
-          javac -version
-
       - name: Build APK
         script: |
-          source $BASH_ENV
           cd android
-          ./gradlew clean assembleDebug
+          ./gradlew assembleDebug
 
     artifacts:
       - android/app/build/outputs/**/*.apk
