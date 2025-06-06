@@ -1,14 +1,25 @@
 workflows:
-  build-android:
+  build-android-capacitor:
     name: Build Android APK (Capacitor)
     max_build_duration: 20
+    environment:
+      vars:
+        ANDROID_SDK_ROOT: /usr/local/share/android-sdk
+      node: 20.10.0
     scripts:
-      - echo "Liste des versions Java dispo"
-      - /usr/libexec/java_home -V
-      - echo "Set JAVA_HOME to Java 17"
-      - export JAVA_HOME=$(/usr/libexec/java_home -v 17)
-      - export PATH=$JAVA_HOME/bin:$PATH
-      - java -version
-      - cd android && ./gradlew clean assembleDebug
+      - name: Install dependencies
+        script: |
+          npm install
+      - name: Copy web assets
+        script: |
+          npx cap sync android
+      - name: Build APK
+        script: |
+          cd android
+          ./gradlew assembleDebug
     artifacts:
-      - android/app/build/outputs/apk/debug/app-debug.apk
+      - android/app/build/outputs/**/*.apk
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com
