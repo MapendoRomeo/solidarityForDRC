@@ -3,16 +3,15 @@ workflows:
     name: Build Android APK with Java 21
     max_build_duration: 60
     environment:
-      android:
-        # Configure Android SDK version ici si nécessaire
-        # example: build_tools_version: "34.0.0"
+      # Optionnel: tu peux définir ici un JAVA_HOME par défaut
+      java_version: openjdk@21
     scripts:
-      - name: Installer OpenJDK 21
+      - name: Installer openjdk 21
         script: |
           brew install openjdk@21
           echo "export JAVA_HOME=$(/usr/libexec/java_home -v 21)" >> $BASH_ENV
           echo "export PATH=$JAVA_HOME/bin:$PATH" >> $BASH_ENV
-      - name: Vérifier la version de Java
+      - name: Vérifier Java
         script: |
           source $BASH_ENV
           java -version
