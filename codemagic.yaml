@@ -1,25 +1,45 @@
 workflows:
-  android-build:
-    name: Build Android APK with Java 21
-    max_build_duration: 60
+  build-android-capacitor:
+    name: Build Android APK (Capacitor)
+    max_build_duration: 20
     environment:
-      # Optionnel: tu peux définir ici un JAVA_HOME par défaut
-      java_version: openjdk@21
+      vars:
+        java_version: 17.0.0
+        android_sdk: 30.0.3
+        android_ndk: 21.4.7075529
+        node_version: 20.10.0
+      node: 20.10.0
     scripts:
-      - name: Installer openjdk 21
+      - name: Install dependencies
+        script: |
+          npm install
+
+      - name: Copy web assets
+        script: |
+          npx cap sync android
+
+      - name: Install OpenJDK 21
         script: |
           brew install openjdk@21
           echo "export JAVA_HOME=$(/usr/libexec/java_home -v 21)" >> $BASH_ENV
           echo "export PATH=$JAVA_HOME/bin:$PATH" >> $BASH_ENV
-      - name: Vérifier Java
+
+      - name: Verify Java version
         script: |
           source $BASH_ENV
           java -version
           javac -version
+
       - name: Build APK
         script: |
           source $BASH_ENV
           cd android
           ./gradlew clean assembleDebug
+
     artifacts:
       - android/app/build/outputs/**/*.apk
+
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com
