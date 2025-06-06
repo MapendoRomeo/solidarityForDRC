@@ -9,7 +9,6 @@ workflows:
       - export JAVA_HOME=$(/usr/libexec/java_home -v 17)
       - export PATH=$JAVA_HOME/bin:$PATH
       - java -version
-      - cd android
-      - ./gradlew clean assembleDebug
+      - cd android && ./gradlew clean assembleDebug
     artifacts:
       - android/app/build/outputs/apk/debug/app-debug.apk
