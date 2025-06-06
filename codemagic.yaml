@@ -8,41 +8,7 @@ workflows:
         android_sdk: 30.0.3
         android_ndk: 21.4.7075529
         node_version: 20.10.0
-    cache:
-      - node_modules
-      - android/build
-      - android/app/build
-    before_build:
-      - name: Install Java
-        script: |
-          sudo apt-get update
-          sudo apt-get install openjdk-17-jdk
-          sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
-          sudo update-alternatives --set javac /usr/lib/jvm/java-17-openjdk-amd64/bin/javac
-          java -version
-      - name: Install Android SDK
-        script: |
-          sudo apt-get update
-          sudo apt-get install -y lib32stdc++6 lib32z1
-          wget https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip
-          unzip commandlinetools-linux-7583922_latest.zip
-          yes | sudo ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager --licenses
-          yes | sudo ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager "platforms;android-30" "build-tools;30.0.3"
-          yes | sudo ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager --update
-          yes | sudo ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager --install "ndk;21.4.7075529"
-          echo "y" | ${ANDROID_HOME}/cmdline-tools/bin/sdkmanager --install "ndk;21.4.7075529"
-      - name: Install Node
-        script: |
-          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-          nvm install $node_version
-          nvm use $node_version
-      - name: Install Capacitor
-        script: |
-          npm install -g @capacitor/cli
-    build:
-      name: Build APK
+      node: 20.10.0
     scripts:
       - name: Install dependencies
         script: |
