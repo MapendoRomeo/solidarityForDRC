@@ -2,11 +2,12 @@ workflows:
   android-capacitor:
     name: Build Android App with Capacitor
     environment:
-      java: 17
-      JAVA_HOME: /opt/buildagent/java/openjdk-17
+      vars:
+        JAVA_HOME: /opt/buildagent/java/openjdk-17
       android_signing:
-        - my_keystore
+        - keystore_reference
       node: 18.16.0
+      java: 17
     scripts:
       - name: Install dependencies
         script: |
@@ -14,12 +15,12 @@ workflows:
       - name: Build web assets
         script: |
           npm run build || echo "No build script, skipping..."
-      - name: Sync Capacitor
+      - name: Copy web assets to native platforms
         script: |
           npx cap sync
       - name: Build Android app
         script: |
           cd android
-          ./gradlew assembleRelease
+          ./gradlew assembleDebug
     artifacts:
       - android/app/build/outputs/**/*.apk
