@@ -1,26 +1,25 @@
 workflows:
-  android-capacitor:
-    name: Build Android App with Capacitor
+  build-android-capacitor:
+    name: Build Android APK (Capacitor)
+    max_build_duration: 20
     environment:
       vars:
-        JAVA_HOME: /opt/buildagent/java/openjdk-17
-      android_signing:
-        - keystore_reference
-      node: 18.16.0
-      java: 17
+        JAVA_VERSION: 17
+      node: 18.18.0
     scripts:
       - name: Install dependencies
         script: |
           npm install
-      - name: Build web assets
+      - name: Copy web assets
         script: |
-          npm run build || echo "No build script, skipping..."
-      - name: Copy web assets to native platforms
-        script: |
-          npx cap sync
-      - name: Build Android app
+          npx cap sync android
+      - name: Build APK
         script: |
           cd android
           ./gradlew assembleDebug
     artifacts:
       - android/app/build/outputs/**/*.apk
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com
